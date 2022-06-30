@@ -39,5 +39,4 @@ data["GDP Before Covid"] = {65279.53, 8897.49, 2100.75,
 data["GDP During Covid"] = {63543.58, 6796.84, 1900.71,
                             10126.72, 6126.87, 8346.70,
                             27057.16, 5090.72, 5332.77, 40284.64}
-data = data.head(10)
-print(data)
+#we will see further
