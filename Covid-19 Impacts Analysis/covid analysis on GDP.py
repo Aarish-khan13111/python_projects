@@ -67,4 +67,14 @@ fig.add_trace(go.Bar(
     marker_color='lightsalmon'
 ))
 fig.update_layout(barmode='group', xaxis_tickangle=-45)
+
+# Percentage of Total Cases and Deaths
+cases = data["Total Cases"].sum()
+deceased = data["Total Deaths"].sum()
+
+labels = ["Total Cases", "Total Deaths"]
+values = [cases, deceased]
+
+fig = px.pie(data, values=values, names=labels,
+             title='Percentage of Total Cases and Deaths', hole=0.5)
 fig.show()
