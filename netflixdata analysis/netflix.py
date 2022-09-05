@@ -43,11 +43,33 @@ actorsTop5=actorsTop5.sort_values(by=['Total Content'])
 fig2=px.bar(actorsTop5,x='Total Content',y='Actor', title='Top 5 Actors on Netflix')
 fig2.show()
 
-#Next thing is to analyze from this data is the trend of production over the years on netflix
+#tend of production over the year
 df1=df[['type','release_year']]
-df1=df1.rename(columns={"release_year": "Release year"})
-df2=df1.groupby(['Release year','type']).size().reset_index(name='Total content')
-df2=df2[df2['Release year']>=2010]
-fig3 = px.line(df2,x="Release year",y="Total content",color='type',title='Trend on content produce over the years on Netfilx')
+df1=df1.rename(columns={"release_year": "Release Year"})
+df2=df1.groupby(['Release Year','type']).size().reset_index(name='Total Content')
+df2=df2[df2['Release Year']>=2010]
+fig3 = px.line(df2, x="Release Year", y="Total Content", color='type',title='Trend of content produced over the years on Netflix')
 fig3.show()
 
+
+#sentiment of content on netflix
+dfx=df[['release_year','description']]
+dfx=dfx.rename(columns={'release_year':'Release Year'})
+for index,row in dfx.iterrows():
+    z=row['description']
+    testimonial=TextBlob(z)
+    p=testimonial.sentiment.polarity
+    if p==0:
+        sent='Neutral'
+    elif p>0:
+        sent='Positive'
+    else:
+        sent='Negative'
+    dfx.loc[[index,2],'Sentiment']=sent
+
+
+dfx=dfx.groupby(['Release Year','Sentiment']).size().reset_index(name='Total Content')
+
+dfx=dfx[dfx['Release Year']>=2010]
+fig4 = px.bar(dfx, x="Release Year", y="Total Content", color="Sentiment", title="Sentiment of content on Netflix")
+fig4.show()
